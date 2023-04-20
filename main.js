@@ -24,20 +24,35 @@ const pAequorFactory = (number, dna) => {
       let dnaBases = ["A", "T", "C", "G"];
 
       let randomIndexNumber = Math.floor(Math.random() * 15);
-      
+
       let randomDNABase = this.dna[randomIndexNumber];
       let randomNewDNABase = dnaBases.filter((base) => base !== randomDNABase)[
         Math.floor(Math.random() * 3)
       ];
       this.dna.splice(randomIndexNumber, 1, randomNewDNABase);
-      
+
       return dna;
+    },
+    // Take species to compare and print percentage of common DNA
+    compareDNA(species) {
+      let counter = 0;
+      species.dna.forEach((base, index) => {
+        if (base === this.dna[index]) {
+          counter++;
+        }
+      });
+      let elementCommon = (counter / this.dna.length) * 100;
+      return `specimen #${this.number} and specimen #${
+        species.number
+      } have ${elementCommon.toFixed(2)}% DNA in common`;
     },
   };
 };
 
-
 let candida = pAequorFactory(1, mockUpStrand());
+let bums = pAequorFactory(2, mockUpStrand());
 
-console.log(candida.dna)
-console.log(candida.mutate())
+console.log(candida.dna);
+console.log(candida.mutate());
+console.log(bums.dna);
+console.log(candida.compareDNA(bums));
