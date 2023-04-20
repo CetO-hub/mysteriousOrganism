@@ -46,13 +46,27 @@ const pAequorFactory = (number, dna) => {
         species.number
       } have ${elementCommon.toFixed(2)}% DNA in common`;
     },
+    // Determine if species will probably survive (sum C+G > 60%)
+    willLikelySurvive() {
+      let count = 0;
+      this.dna.forEach((dna) => {
+        if (dna === "C" || dna === "G") {
+          count++;
+        }
+      });
+      if ((count / this.dna.length) * 100 === 60) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   };
 };
 
-let candida = pAequorFactory(1, mockUpStrand());
-let bums = pAequorFactory(2, mockUpStrand());
+// Array of species
+let batchSpecies = [];
 
-console.log(candida.dna);
-console.log(candida.mutate());
-console.log(bums.dna);
-console.log(candida.compareDNA(bums));
+// Create 30 different species and push it into batchSpecies array
+for (let i = 1; i <= 30; i++) {
+  batchSpecies.push(pAequorFactory(i, mockUpStrand()));
+}
